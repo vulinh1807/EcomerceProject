@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\chu_de;
-use Session;
+use Illuminate\Support\Facades\Session;
 use App\Http\Requests\chu_de_create_request;
 use App\Http\Requests\chu_de_update_request;
 

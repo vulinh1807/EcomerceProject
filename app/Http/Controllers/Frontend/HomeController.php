@@ -10,7 +10,7 @@ use App\Models\san_pham;
 use Illuminate\Support\Facades\DB;
 use Response;
 use App\Http\Requests\LogInRequest;
-use Session;
+use Illuminate\Support\Facades\Session;
 class HomeController extends Controller
 {
     /**
