@@ -8,7 +8,7 @@ use App\Models\slider;
 use App\Models\loai_san_pham;
 use App\Models\san_pham;
 use Illuminate\Support\Facades\DB;
-use Response;
+use Illuminate\Support\Facades\Response;
 use App\Http\Requests\LogInRequest;
 use Illuminate\Support\Facades\Session;
 class HomeController extends Controller
@@ -48,8 +48,8 @@ class HomeController extends Controller
 
             limit 0,49
         ');
-        $infokh = Session::get('khachhanginfo');
         
+        $infokh = Session::get('khachhanginfo');
         $idkh = isset($infokh['idkh']) ? $infokh['idkh'] : '';
         $giohang = DB::select('
             SELECT a.san_pham_id,
@@ -63,15 +63,10 @@ class HomeController extends Controller
             san_pham_mo_ta,
             san_pham_trang_thai,
             c.gio_hang_so_luong
-
             FROM gio_hang c
             left join san_pham a on c.san_pham_id = a.san_pham_id
-            
             where c.khach_hang_id = :idkh
-            ORDER BY c.gio_hang_cap_nhat DESC
-
-        ',['idkh' => $idkh]);
-        
+            ORDER BY c.gio_hang_cap_nhat DESC',['idkh' => $idkh]);
         return view('khachhang.index')
         ->with('danhsach', $slider)
         ->with('dssanpham', $dssanpham)
@@ -82,8 +77,8 @@ class HomeController extends Controller
     public function info(Request $request)
     {        
         $masp = $request->masp;
-//        print_r($masp);die;
-//        $sp = san_pham::where("san_pham_ma", $masp)->first(); 
+//      print_r($masp);die;
+//      $sp = san_pham::where("san_pham_ma", $masp)->first(); 
         $sp = DB::select('
             SELECT san_pham_id,
             san_pham_ma,
@@ -101,7 +96,6 @@ class HomeController extends Controller
             loai_san_pham_ma,
             loai_san_pham_ten_vn,
             loai_san_pham_ten_en
-
             FROM san_pham a
             LEFT JOIN loai_san_pham b ON a.loai_san_pham_id = b.loai_san_pham_id
             WHERE san_pham_ma = :masp
@@ -145,7 +139,6 @@ class HomeController extends Controller
             
         ",['masp' => $masp]);
         return Response::json(Array('sp' => $sp, 'hinh' =>$hinhsp,'kichthuoc' => $kichthuoc,'mausac' => $mausac));
-        
     }
     
     public function login(LogInRequest $request)
@@ -207,13 +200,10 @@ class HomeController extends Controller
                 
             }
         }
-        
         Session::forget('khachhanginfo');
         Session::put('khachhanginfo', $info);
-        
         Session::forget('quanlyinfo');
         Session::put('quanlyinfo', $infoql);
-        
         return redirect(route('home.index'));
     }
     
@@ -265,10 +255,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
+    //public function create(){}
 
     /**
      * Store a newly created resource in storage.
@@ -276,10 +263,7 @@ class HomeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-    }
+    //public function store(Request $request){}
 
     /**
      * Display the specified resource.
@@ -287,10 +271,7 @@ class HomeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
-    }
+    //public function show($id){}
 
     /**
      * Show the form for editing the specified resource.
@@ -298,10 +279,7 @@ class HomeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
-    }
+    //public function edit($id){}
 
     /**
      * Update the specified resource in storage.
@@ -310,10 +288,7 @@ class HomeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+    //public function update(Request $request, $id){}
 
     /**
      * Remove the specified resource from storage.
@@ -321,8 +296,5 @@ class HomeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
-    }
+    //public function destroy($id){}
 }

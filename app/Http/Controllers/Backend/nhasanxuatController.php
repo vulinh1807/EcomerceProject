@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\nha_san_xuat;
-use Session;
+use Illuminate\Support\Facades\Session;
 use App\Http\Requests\nha_san_xuat_create_request;
 use App\Http\Requests\nsx_update_request;
 
@@ -13,7 +13,8 @@ class nhasanxuatController extends Controller
 {
     public function index()
     {
-        $ds_sp = \App\Models\nha_san_xuat::all();
+        //$ds_sp = \App\Models\nha_san_xuat::all();
+        $ds_sp = nha_san_xuat::all();
         return view('admin.nhasanxuat.index')->with('data', $ds_sp);
     }
     public function store(nha_san_xuat_create_request $request)
@@ -21,14 +22,14 @@ class nhasanxuatController extends Controller
         $nsx_ma = $request->nsx_ma;
         $nsx_ten_vn = $request->nsx_ten_vn;
         $nsx_ten_en = $request->nsx_ten_en;
-       
-        $model = new \App\Models\nha_san_xuat();
+        //$model = new \App\Models\nha_san_xuat();
+        $model = new nha_san_xuat();
         $model->nsx_ma = strtoupper($nsx_ma);
         $model->nsx_ten = stripUnicode($nsx_ten_vn);
         $model->nsx_ten_vn = $nsx_ten_vn;
         $model->nsx_ten_en = $nsx_ten_en;
         $model->save();
-        Session::flash('sussecs','Thêm mới thành công!');
+        Session::flash('sussecs', 'Thêm mới thành công!');
         return redirect(route('nhasanxuat.index'));
     }
     /**
@@ -38,12 +39,11 @@ class nhasanxuatController extends Controller
     {
         $data_find = nha_san_xuat::find($request->id);
         return response()->json(array(
-            'code'  => 200,
+            'code' => 200,
             'data' => $data_find,
         ));
     }
-    
-        //update 
+    //update 
     public function update(nsx_update_request $request, $id)
     {
         $nsx = nha_san_xuat::find($id);
@@ -51,10 +51,10 @@ class nhasanxuatController extends Controller
         $nsx->nsx_ten_vn = $request->input('nsx_ten_vn');
         $nsx->nsx_ten_en = $request->input('nsx_ten_en');
         $nsx->save();
-        Session::flash('sussecs','Sửa thành công!');
+        Session::flash('sussecs', 'Sửa thành công!');
         return redirect()->route('nhasanxuat.index');
     }
-        public function destroy($id)
+    public function destroy($id)
     {
         $loai = nha_san_xuat::find($id);
         $loai->delete();

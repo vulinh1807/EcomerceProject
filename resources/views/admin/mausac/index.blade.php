@@ -67,10 +67,7 @@
                     </div>
 
                 </div>
-
 <!-- Button trigger modal -->
-
-
 <!-- Modal them moi-->
 <div class="modal fade " id="modal" tabindex="-1" aria-labelledby="modal" aria-hidden="true">
   <div class="modal-dialog modal-lg">
@@ -114,12 +111,10 @@
     </div>
   </div>
 </div>
-
 @endsection
 
 @section('custom-scripts')
 <script>
-    
         $( document ).ready(function() { 
         @if ($errors->any())
             $('#modal').modal('show');
@@ -127,13 +122,13 @@
         $('.delete-form').submit(function (e){
             e.preventDefault();
             Swal.fire({
-                title: 'Bạn có chắt chắn?',
+                title: 'Bạn có chắc chắn?',
                 text: "Dữ liệu khi xóa sẽ không thể phục hồi!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Vâng, tôi chắt chắn!'
+                confirmButtonText: 'Vâng, tôi chắc chắn!'
               }).then((result) => {
                 if (result.isConfirmed) {
                   $.ajax({
@@ -155,7 +150,6 @@
               });
             });
         });
-        
         function prepareAdd(){
             ClearErrorMessage();
             $('#mau_sac_ma').val('').attr('disabled', false);
@@ -166,8 +160,6 @@
             $('#frmMain').attr('action', '{{ route('mausac.store') }}');
             $('#modal').modal('show');
         }
-        
-        
         function prepareEdit(id, action){
             ClearErrorMessage();
             if (id !== '') {

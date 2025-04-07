@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\nha_cung_cap;
-use Session;
+use Illuminate\Support\Facades\Session;
 use App\Http\Requests\nha_cung_cap_create_request;
 use App\Http\Requests\nha_cung_cap_update_request;
 
@@ -13,7 +13,8 @@ class nhacungcapController extends Controller
 {
     public function index()
     {
-        $ds_sp = \App\Models\nha_cung_cap::all();
+        //$ds_sp = \App\Models\nha_cung_cap::all();
+        $ds_sp = nha_cung_cap::all();
         return view('admin.nhacungcap.index')->with('data', $ds_sp);
     }
     public function store(nha_cung_cap_create_request $request)
@@ -21,8 +22,8 @@ class nhacungcapController extends Controller
         $ncc_ma = $request->ncc_ma;
         $ncc_ten_vn = $request->ncc_ten_vn;
         $ncc_ten_en = $request->ncc_ten_en;
-       
-        $model = new \App\Models\nha_cung_cap();
+        //$model = new \App\Models\nha_cung_cap();
+        $model = new nha_cung_cap();
         $model->ncc_ma = strtoupper($ncc_ma);
         $model->ncc_ten = stripUnicode($ncc_ten_vn);
         $model->ncc_ten_vn = $ncc_ten_vn;
@@ -42,8 +43,7 @@ class nhacungcapController extends Controller
             'data' => $data_find,
         ));
     }
-    
-        //update 
+    //update 
     public function update(nha_cung_cap_update_request $request, $id)
     {
         $ncc = nha_cung_cap::find($id);
@@ -54,7 +54,7 @@ class nhacungcapController extends Controller
         Session::flash('sussecs','Sửa thành công!');
         return redirect()->route('nhacungcap.index');
     }
-        public function destroy($id)
+    public function destroy($id)
     {
         $loai = nha_cung_cap::find($id);
         $loai->delete();

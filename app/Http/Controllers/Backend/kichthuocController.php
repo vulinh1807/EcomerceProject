@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\kich_thuoc;
-use Session;
+use Illuminate\Support\Facades\Session;
 use App\Http\Requests\kich_thuoc_create_request;
 use App\Http\Requests\kich_thuoc_update_request;
 
@@ -13,7 +13,8 @@ class kichthuocController extends Controller
 {
     public function index()
     {
-        $ds_sp = \App\Models\kich_thuoc::all();
+        //$ds_sp = \App\Models\kich_thuoc::all();
+        $ds_sp = kich_thuoc::all();
         return view('admin.kichthuoc.index')->with('data', $ds_sp);
     }
     public function store(kich_thuoc_create_request $request)
@@ -22,8 +23,8 @@ class kichthuocController extends Controller
         $kich_thuoc_ten_vn = $request->kich_thuoc_ten_vn;
         $kich_thuoc_ten_en = $request->kich_thuoc_ten_en;
         $kich_thuoc_dien_giai = $request->kich_thuoc_dien_giai;
-       
-        $model = new \App\Models\kich_thuoc();
+        //$model = new \App\Models\kich_thuoc();
+        $model = new kich_thuoc();
         $model->kich_thuoc_ma = strtoupper($kich_thuoc_ma);
         $model->kich_thuoc_ten = stripUnicode($kich_thuoc_ten_vn);
         $model->kich_thuoc_ten_vn = $kich_thuoc_ten_vn;
@@ -33,9 +34,7 @@ class kichthuocController extends Controller
         Session::flash('sussecs','Thêm mới thành công!');
         return redirect(route('kichthuoc.index'));
     }
-    /**
-     * Action AJAX get data edit 
-     */
+    //Action AJAX get data edit 
     public function getinfo(Request $request)
     {
         $data_find = kich_thuoc::find($request->id);
@@ -44,8 +43,7 @@ class kichthuocController extends Controller
             'data' => $data_find,
         ));
     }
-    
-        //update 
+    //update 
     public function update(kich_thuoc_update_request $request, $id)
     {
         $kich_thuoc = kich_thuoc::find($id);
@@ -57,7 +55,7 @@ class kichthuocController extends Controller
         Session::flash('sussecs','Sửa thành công!');
         return redirect()->route('kichthuoc.index');
     }
-        public function destroy($id)
+    public function destroy($id)
     {
         $loai = kich_thuoc::find($id);
         $loai->delete();

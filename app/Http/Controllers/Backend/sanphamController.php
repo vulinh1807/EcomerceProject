@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\san_pham;
 use App\Models\san_pham_hinh_anh;
 use App\Models\users;
-use Session;
+use Illuminate\Support\Facades\Session;
 use App\Http\Requests\san_pham_create_request;
 use App\Http\Requests\san_pham_update_request;
-use Storage;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 
 class sanphamController extends Controller
@@ -32,13 +32,13 @@ class sanphamController extends Controller
         $san_pham = san_pham::find($id);
         
         $ds_lsp = \App\Models\loai_san_pham::all();
-        return view('admin.sanpham.edit')->with('data', $ds_lsp)
-                                         ->with('san_pham', $san_pham);
+        return view('admin.sanpham.edit')
+        ->with('data', $ds_lsp)
+        ->with('san_pham', $san_pham);
     }
     public function editfunction($id)
     {
         $san_pham = san_pham::find($id);
-        
         $ds_lsp = \App\Models\loai_san_pham::all();
         $ds_ncc = \App\Models\nha_cung_cap::all();
         $ds_chu_de = \App\Models\chu_de::all();
@@ -85,7 +85,7 @@ class sanphamController extends Controller
     }
     public function store(san_pham_create_request $request)
     {
-//        dd($request);
+//      dd($request);
         $san_pham_ma = $request->san_pham_ma;
         $san_pham_ten_vn = $request->san_pham_ten_vn;
         $san_pham_ten_en = $request->san_pham_ten_en;
@@ -95,12 +95,7 @@ class sanphamController extends Controller
         $san_pham_trang_thai = $request->san_pham_trang_thai;
         $loai_san_pham_id = $request->loai_san_pham_id;
         
-        
-
-        
-        
         $model = new \App\Models\san_pham();
-        
         $model->san_pham_ma = strtoupper($san_pham_ma);
         $model->san_pham_ten_vn = $san_pham_ten_vn;
         $model->san_pham_ten = stripUnicode($san_pham_ten_vn);
@@ -126,7 +121,6 @@ class sanphamController extends Controller
             $files = $request->sp_hinhanhlienquan;
             foreach ($request->san_pham_hinh_anh_lien_quan as $index => $file) {
                 $name_file = "sp_hinhanhlienquan_".$model->san_pham_ma."_$index.".$file->getClientOriginalExtension();
-                
                 $file->storeAs('public/photos', $name_file);
 
                 // Tạo đối tưọng HinhAnh
@@ -151,7 +145,7 @@ class sanphamController extends Controller
         ));
     }
     
-        //update 
+    //update 
     public function update(san_pham_update_request $request, $id)
     {
         
@@ -210,14 +204,13 @@ class sanphamController extends Controller
         Session::flash('sussecs','Sửa thành công!');
         return redirect()->route('sanpham.index');
     }
-        public function destroy($id)
+    public function destroy($id)
     {
         $user = users::where('san_pham_id', $id)->first();
         $user->delete();
         $san_pham = san_pham::find($id);
         $san_pham->delete();
     }
-    
     public function deleteAvatar ($id) {
          $san_pham = san_pham::find($id);
          $name_file = $san_pham->san_pham_hinh_anh;
@@ -240,9 +233,8 @@ class sanphamController extends Controller
                 'append' => true
             ];
             print_r(json_encode($arr)) ;
-    }
-    
-        public function deleteimage ($id) {
+    }    
+    public function deleteimage ($id) {
         $san_pham_hinh_anh = DB::table('san_pham_hinh_anh')
                 ->where('san_pham_hinh_anh_id', '=', $id)
                 ->get();
@@ -307,7 +299,6 @@ class sanphamController extends Controller
         Session::flash('sussecs','Thành công');
         return redirect(route('sanpham.index'));
     }
-    
     public function getInfoSanPham(Request $request) {
         $data_find = DB::table('nha_cung_cap_san_pham')->where('san_pham_id', '=', $request->id)->get();
         return response()->json(array(

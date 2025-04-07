@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\nhan_vien;
 use App\Models\users;
-use Session;
+use Illuminate\Support\Facades\Session;
 use App\Http\Requests\nhan_vien_create_request;
 use App\Http\Requests\nhan_vien_update_request;
 

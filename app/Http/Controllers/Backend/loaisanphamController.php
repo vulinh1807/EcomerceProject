@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\loai_san_pham;
 use Validator;
-use Session;
+use Illuminate\Support\Facades\Session;
 use App\Http\Requests\loai_san_pham_request;
 use App\Http\Requests\loai_san_pham_update_request;
 
@@ -14,7 +14,8 @@ class loaisanphamController extends Controller
 {
     public function index()
     {
-        $ds_sp = \App\Models\loai_san_pham::all();
+        //$ds_sp = \App\Models\loai_san_pham::all();
+        $ds_sp = loai_san_pham::all();
         return view('admin.loaisanpham.index')->with('data', $ds_sp);
     }
     public function store(loai_san_pham_request $request)
@@ -22,8 +23,8 @@ class loaisanphamController extends Controller
         $loai_san_pham_ma = $request->loai_san_pham_ma;
         $loai_san_pham_ten_vn = $request->loai_san_pham_ten_vn;
         $loai_san_pham_ten_en = $request->loai_san_pham_ten_en;
-       
-        $m_loai = new \App\Models\loai_san_pham();
+        //$m_loai = new \App\Models\loai_san_pham();
+        $m_loai = new loai_san_pham();
         $m_loai->loai_san_pham_ma = strtoupper($loai_san_pham_ma);
         $m_loai->loai_san_pham_ten = stripUnicode($loai_san_pham_ten_vn);
         $m_loai->loai_san_pham_ten_vn = $loai_san_pham_ten_vn;

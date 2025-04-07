@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\mau_sac;
-use Session;
+use Illuminate\Support\Facades\Session;
 use App\Http\Requests\mau_sac_create_request;
 use App\Http\Requests\mau_sac_update_request;
 
@@ -13,7 +13,8 @@ class mausacController extends Controller
 {
     public function index()
     {
-        $ds_sp = \App\Models\mau_sac::all();
+        //$ds_sp = \App\Models\mau_sac::all();
+        $ds_sp = mau_sac::all();
         return view('admin.mausac.index')->with('data', $ds_sp);
     }
     public function store(mau_sac_create_request $request)
@@ -21,8 +22,8 @@ class mausacController extends Controller
         $mau_sac_ma = $request->mau_sac_ma;
         $mau_sac_ten_vn = $request->mau_sac_ten_vn;
         $mau_sac_ten_en = $request->mau_sac_ten_en;
-       
-        $model = new \App\Models\mau_sac();
+        // $model = new \App\Models\mau_sac();
+        $model = new mau_sac();
         $model->mau_sac_ma = strtoupper($mau_sac_ma);
         $model->mau_sac_ten = stripUnicode($mau_sac_ten_vn);
         $model->mau_sac_ten_vn = $mau_sac_ten_vn;

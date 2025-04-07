@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ly_do;
-use Session;
+use Illuminate\Support\Facades\Session;
 use App\Http\Requests\ly_do_create_request;
 use App\Http\Requests\ly_do_update_request;
 
@@ -13,7 +13,8 @@ class lydoController extends Controller
 {
     public function index()
     {
-        $ds_sp = \App\Models\ly_do::all();
+        //$ds_sp = \App\Models\ly_do::all();
+        $ds_sp = ly_do::all();
         return view('admin.lydo.index')->with('data', $ds_sp);
     }
     public function store(ly_do_create_request $request)
@@ -22,8 +23,8 @@ class lydoController extends Controller
         $ly_do_ten_vn = $request->ly_do_ten_vn;
         $ly_do_ten_en = $request->ly_do_ten_en;
         $ly_do_loai = $request->ly_do_loai;
-       
-        $model = new \App\Models\ly_do();
+        //$model = new \App\Models\ly_do();
+        $model = new ly_do();
         $model->ly_do_ma = strtoupper($ly_do_ma);
         $model->ly_do_ten = stripUnicode($ly_do_ten_vn);
         $model->ly_do_ten_vn = $ly_do_ten_vn;

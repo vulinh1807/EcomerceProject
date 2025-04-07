@@ -21,7 +21,6 @@ class chudeController extends Controller
         $chu_de_ma = $request->chu_de_ma;
         $chu_de_ten_vn = $request->chu_de_ten_vn;
         $chu_de_ten_en = $request->chu_de_ten_en;
-       
         $model = new \App\Models\chu_de();
         $model->chu_de_ma = strtoupper($chu_de_ma);
         $model->chu_de_ten = stripUnicode($chu_de_ten_vn);
